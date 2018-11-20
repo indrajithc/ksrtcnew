@@ -2,6 +2,20 @@
 <?php
 $db=new Database();
 ?>
+<?php
+    if (isset($_POST['stationmasterid'])) 
+ {
+
+   $id = $_POST['stationmasterid'];
+   $sql="DELETE FROM `stationmaster` WHERE `stationmaster`.`stationmasterid` = '$id'";
+
+$db->execute_query($sql);
+                   if($db){
+                              $message= 'Successfully Deleted';
+                              echo "Successfully Deleted";
+                              }
+}
+?>
 <section class="my-3">
 	<div class="row-sm-10"  align="center">
    <div class="col-sm-6" align="left" >
@@ -21,14 +35,14 @@ $db=new Database();
           foreach ($result as $key => $value) {
             $meselected  = "";
             if (isset($_POST['depotname']))   {
-              if( $_POST['depotname'] == $value['deponame']) {
+              if( $_POST['depotname'] == $value['depotname']) {
                 $meselected = " selected "; 
               }
 
             }
 
 
-            echo "<option value='$value[deponame]'   $meselected>$value[deponame]</option>" ;
+            echo "<option value='$value[depotname]'   $meselected>$value[depotname]</option>" ;
           }
 
 
@@ -112,7 +126,21 @@ $db=new Database();
                     <td><?php echo $value['depotpswd']; ?></td>
 
 
-                    <td><a href="admin/stationmasterfulviewvol.php?id=<?php echo $value['stationmasterid']; ?>" id= <?php echo $value['stationmasterid']; ?>"  class="btn btn-sm btn-info "  > <i  class=" fa fa-eye"></i></a></td>
+                    <td>
+                      <form action="action" method="post">
+                        <input type="hidden" value="<?php echo $value['stationmasterid']; ?>" name="stationmasterid">
+                        <?php
+                          // if (isset($_POST['stationmasterid'])) 
+                          // {
+
+                          //        $id = $_POST['stationmasterid'];
+
+                          // }
+                        ?>
+                   <!--  <a href="admin/stationmasterfulviewvol.php?id=<?php echo $value['stationmasterid']; ?>" id= <?php echo $value['stationmasterid']; ?>"  class="btn btn-sm btn-info "><i class="fas fa-trash-alt"></i> -->
+                      <button name="submit" class="btn btn-sm btn-info "<i class="fas fa-trash-alt" ></i>go</button>
+                      </form>
+                    </td>
                     <td><a href="admin/stationmasteredit_vol.php?id=<?php echo $value['stationmasterid']; ?>" id=<?php echo $value['stationmasterid']; ?>"   class="btn btn-sm btn-warning "  ><i class="far fa-edit"></i></a>     </td>
                   </tr>
 
