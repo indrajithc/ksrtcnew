@@ -4,7 +4,7 @@
  * @Author: indran
  * @Date:   2018-10-23 17:00:27
  * @Last Modified by:   indran
- * @Last Modified time: 2018-11-08 06:44:34
+ * @Last Modified time: 2018-11-25 10:00:42
  */
 
 include_once('../global.php'); ?>
@@ -58,6 +58,7 @@ if(isset($_POST['login'])){
 	if($user){
 
 		$_SESSION[SYSTEM_NAME . 'userid']=$username;
+		$_SESSION[SYSTEM_NAME . 'userid0']=$user[0]['userid'];
 
 
 		$_SESSION[SYSTEM_NAME . 'type']='admin'; 
@@ -242,6 +243,7 @@ body {
 
 
 	<div class="login-page">
+		<h4 class="w-100 text-center text-white">Admin 	</h4>
 		<div class="form">
 			<form class="register-form">
 				<input type="text" placeholder="name"/>

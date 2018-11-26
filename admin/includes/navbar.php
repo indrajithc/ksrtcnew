@@ -3,8 +3,8 @@
 /**
  * @Author: indran
  * @Date:   2018-10-17 17:28:08
- * @Last Modified by: mikey.zhaopeng
- * @Last Modified time: 2018-10-29 18:59:45
+ * @Last Modified by:   indran
+ * @Last Modified time: 2018-11-26 16:56:27
  */
 ?>
 
@@ -71,13 +71,45 @@
 
 
 
+<li class="nav-item">
+	<a class="nav-link" data-toggle="collapse" href="#depot" aria-expanded="false" aria-controls="depot">
+		
+		<i class="menu-icon mdi mdi-office-building"></i>
+		<span class="menu-title text-capitalize">Depot</span>
+		<i class="menu-arrow"></i>
+	</a>
+	<div class="collapse" id="depot">
+		<ul class="nav flex-column sub-menu">
+			<li class="nav-item">
+				<a class="nav-link" href="admin/depotdetails.php">Add</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" href="admin/viewadepots.php">Edit</a>
+			</li>
+		</ul>
+	</div>
+</li>
+
 
 <li class="nav-item">
-	<a class="nav-link" href="admin/depotdetails.php">
+	<a class="nav-link" data-toggle="collapse" href="#schedule" aria-expanded="false" aria-controls="schedule">
+		
 		<i class="menu-icon mdi mdi-office-building"></i>
-		<span class="menu-title text-capitalize">Depot Details</span>
+		<span class="menu-title text-capitalize">schedule</span>
+		<i class="menu-arrow"></i>
 	</a>
+	<div class="collapse" id="schedule">
+		<ul class="nav flex-column sub-menu">
+			<li class="nav-item">
+				<a class="nav-link" href="admin/scheduleadd.php">Add</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" href="admin/scheduleview.php">View</a>
+			</li>
+		</ul>
+	</div>
 </li>
+
 
 <li class="nav-item">
 	<a class="nav-link" href="admin/#">
@@ -86,7 +118,7 @@
 	</a>
 </li>
 
- 
+
 
 <li class="nav-item">
 	<a class="nav-link" href="admin/#">
@@ -96,15 +128,8 @@
 </li>
 
 
-<li class="nav-item">
-	<a class="nav-link" href="admin/#">
-		<i class="menu-icon mdi mdi-message-alert-outline"></i>
-		<span class="menu-title text-capitalize">Complaints</span>
-	</a>
-</li>
 
 
- 
 
 
 

@@ -4,7 +4,7 @@
  * @Author: indran
  * @Date:   2018-10-17 13:24:39
  * @Last Modified by:   indran
- * @Last Modified time: 2018-11-08 06:35:45
+ * @Last Modified time: 2018-11-25 09:59:04
  */
 ?>
 <?php
@@ -36,11 +36,10 @@ define( 'TEMP_DIR', FILES . "temp/"  );
 
 
 define( 'ADMIN', 'admin'); 
+define( 'STATIONMASTER', 'stationmaster'); 
 
 
-
-
-
+ 
 
 
 
@@ -62,11 +61,13 @@ define( 'DIRECTORY_PUBLIC', DIRECTORY  . '' );
 
 
 define( 'DIRECTORY_ADMIN', DIRECTORY . ADMIN . '/' ); 
+define( 'DIRECTORY_STATIONMASTER', DIRECTORY . STATIONMASTER . '/' ); 
 
 
 
 
 define( 'PATH_ADMIN', PATH . ADMIN );  
+define( 'PATH_STATIONMASTER', PATH . STATIONMASTER );  
 
 
 
@@ -78,11 +79,21 @@ define( 'PATH_ADMIN', PATH . ADMIN );
 define( 'TERMS__CONDITIONS', '#'); 
 define( 'THEME_OWN_BY', '2018 MCA RIT ');
 
+function isit($key , $bigarray, $returnme = '') {
+	if (isset($bigarray[$key])) {
+		return $bigarray[$key];
+	}
+	return $returnme;
+}
 function indexMe ( $index ) {
+	if(!is_numeric($index))
+		return 0;
 	$index = INDEX_NUMBER + $index;
 	return  $index;
 }
 function unIndexMe ( $index ) {
+	if(!is_numeric($index))
+		return 0;
 	$index = $index - INDEX_NUMBER ;
 	return  $index;
 }
@@ -104,6 +115,12 @@ function random_bytes_05($length, $keyspace = 'abcdefghijklmnopqrstuvwxyz234567'
 if (empty($_SESSION[ SYSTEM_NAME .'_token']) || !isset($_SESSION[ SYSTEM_NAME .'_token'] )) {
 	$_SESSION[  SYSTEM_NAME . '_token'] = bin2hex(random_bytes_05(32));
 }
+
+
+
+
+
+
 
 
 

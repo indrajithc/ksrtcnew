@@ -4,7 +4,7 @@
  * @Author: indran
  * @Date:   2018-08-21 18:45:04
  * @Last Modified by:   indran
- * @Last Modified time: 2018-11-08 06:45:25
+ * @Last Modified time: 2018-11-25 10:07:01
  */
 function auth_login() {
 
@@ -21,10 +21,13 @@ function auth_login() {
 			case ADMIN :
 			setLocation( DIRECTORY_ADMIN.'login.php');
 			break;
+			case STATIONMASTER :
+			setLocation( DIRECTORY_STATIONMASTER.'login.php');
+			break;
 
 
 			default:
-			setLocation(  DIRECTORY_PUBLIC.'login' );
+			setLocation(  DIRECTORY_PUBLIC.'' );
 			break;
 		}
 
@@ -32,12 +35,14 @@ function auth_login() {
 	}  
 	
 	$flag = true;
+	if( $_SESSION[ SYSTEM_NAME . 'type'] == 'admin' && dirname($_SERVER['SCRIPT_NAME']) . '/' !=  DIRECTORY_ADMIN ) 
+		$flag = false;  
 
-
-	if( decrypt($_SESSION[ SYSTEM_NAME . 'type']) == 'admin' && dirname($_SERVER['SCRIPT_NAME']) . '/' !=  DIRECTORY_ADMIN ) 
+	if( $_SESSION[ SYSTEM_NAME . 'type'] == 'stationmaster' && dirname($_SERVER['SCRIPT_NAME']) . '/' !=  DIRECTORY_STATIONMASTER) 
 		$flag = false;  
 
 	
+
 	
 	if(!$flag ) {
 		auth_use();
@@ -64,6 +69,10 @@ function auth_use() {
 			setLocation(DIRECTORY_ADMIN);
 			break; 
 
+			case 'stationmaster':
+			setLocation(DIRECTORY_STATIONMASTER);
+			break; 
+
 
 			default:
 		 		# code...
@@ -75,7 +84,7 @@ function auth_use() {
 }
 	// get logged user type
 function user_type() {
-	return decrypt($_SESSION[SYSTEM_NAME . 'type']);
+	return $_SESSION[SYSTEM_NAME . 'type'];
 }
 
 

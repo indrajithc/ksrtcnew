@@ -3,23 +3,31 @@
 $db=new Database();
 ?>
 <?php
-    if (isset($_POST['stationmasterid'])) 
- {
+if (isset($_POST['stationmasterid'])) 
+{
 
-   $id = $_POST['stationmasterid'];
-   $sql="DELETE FROM `stationmaster` WHERE `stationmaster`.`stationmasterid` = '$id'";
+ $id = $_POST['stationmasterid'];
+ $sql="DELETE FROM `stationmaster` WHERE `stationmaster`.`stationmasterid` = '$id'";
 
-$db->execute_query($sql);
-                   if($db){
-                              $message= 'Successfully Deleted';
-                              echo "Successfully Deleted";
-                              }
+
+ if(  $db->execute_query($sql) ){
+  $message[0] = 1;
+  $message[1] = 'Successfully Deleted'; 
+} else {
+  $message[0] = 4;
+  $message[1] = 'error'; 
+}
 }
 ?>
 <section class="my-3">
 	<div class="row-sm-10"  align="center">
    <div class="col-sm-6" align="left" >
-     <form  action=""  method="post" data-parsley-validate  align="center" >
+
+
+    <?php echo show_error($message); ?>
+
+
+    <form  action=""  method="post" data-parsley-validate  align="center" >
       <div class="form-group">
         <label for="depotname">Depot Name</label>
 
@@ -127,7 +135,7 @@ $db->execute_query($sql);
 
 
                     <td>
-                      <form action="action" method="post">
+                      <form action="" method="post">
                         <input type="hidden" value="<?php echo $value['stationmasterid']; ?>" name="stationmasterid">
                         <?php
                           // if (isset($_POST['stationmasterid'])) 
@@ -137,32 +145,32 @@ $db->execute_query($sql);
 
                           // }
                         ?>
-                   <!--  <a href="admin/stationmasterfulviewvol.php?id=<?php echo $value['stationmasterid']; ?>" id= <?php echo $value['stationmasterid']; ?>"  class="btn btn-sm btn-info "><i class="fas fa-trash-alt"></i> -->
-                      <button name="submit" class="btn btn-sm btn-info "<i class="fas fa-trash-alt" ></i>go</button>
-                      </form>
-                    </td>
-                    <td><a href="admin/stationmasteredit_vol.php?id=<?php echo $value['stationmasterid']; ?>" id=<?php echo $value['stationmasterid']; ?>"   class="btn btn-sm btn-warning "  ><i class="far fa-edit"></i></a>     </td>
-                  </tr>
+                        <!--  <a href="admin/stationmasterfulviewvol.php?id=<?php echo $value['stationmasterid']; ?>" id= <?php echo $value['stationmasterid']; ?>"  class="btn btn-sm btn-info "><i class="fas fa-trash-alt"></i> -->
+                          <button name="submit" class="btn btn-sm btn-info "<i class="fas fa-trash-alt" ></i>go</button>
+                        </form>
+                      </td>
+                      <td><a href="admin/stationmasteredit_vol.php?id=<?php echo $value['stationmasterid']; ?>" id=<?php echo $value['stationmasterid']; ?>"   class="btn btn-sm btn-warning "  ><i class="far fa-edit"></i></a>     </td>
+                    </tr>
 
 
 
-                <?php endforeach; ?>
-              </tbody>
-            </table>
+                  <?php endforeach; ?>
+                </tbody>
+              </table>
 
-          </div>
-          <?php else : ?>
-            <div class="alert text-center alert-warning">
-              <p>no data found</p>
             </div>
+            <?php else : ?>
+              <div class="alert text-center alert-warning">
+                <p>no data found</p>
+              </div>
+
+            <?php endif; ?>
 
           <?php endif; ?>
 
-        <?php endif; ?>
 
 
-
-      </div> 
-    </div>
-  </form>
-  <?php include_once('includes/footer.php') ?>
+        </div> 
+      </div>
+    </form>
+    <?php include_once('includes/footer.php') ?>

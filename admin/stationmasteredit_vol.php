@@ -18,25 +18,25 @@ if (isset($_POST['submit'])) {
 
 
 
-'name' => $name,
-'type' => $type,
-'joiningyear' => $joining,
-'contactno' => $cno,
-'depotname' => $dname,
-'depotusename' => $dname,
-'depotpswd' => $dpswd
-	);
- 
+    'name' => $name,
+    'type' => $type,
+    'joiningyear' => $joining,
+    'contactno' => $cno,
+    'depotname' => $dname,
+    'depotusename' => $dname,
+    'depotpswd' => $dpswd
+  );
+
 
  // echo $stmnt ='UPDATE `stationmaster` SET name =:sname,type=:type,joiningyear=:joining,contactno=:cno,depotname=:dname,depotusename=:dusr,depotpswd=:dpswd WHERE stationmasterid=:sid ';
-	     
+
 	//      	     $params=array(
-                 
-       
+
+
  //          ':sname'        =>  $name,
  //         ':type'       =>  $type,
  //         '  :joining'    =>  $joining,
-         
+
  //              ':cno'     =>  $cno,
  //          ':dname'       =>  $dname,
  //           ':dusr'        =>  $dusr,
@@ -47,23 +47,23 @@ if (isset($_POST['submit'])) {
  //         // ':longestroute'    =>  $lngstsrc.$lngstdes,
  //         // ':topcollection'   =>  $tpsrc.$tpdes,
  //         // ':income'          =>  $income,
-         
+
 	//      	);
- 
+
 	//          $istrue=$db->execute_query($stmnt,$params);
 
 
 	$istrue = updateTable( 'stationmaster', $params, ' stationmasterid =' . $sid  , $db); 
-	                 if($istrue){
-	         	                  $message= 'Updated Successfully';
-	         	                  echo "Updated Successfully";
-	         	                   setLocation("admin/stationmasteredit.php");
-	                            }
-	                 else{
-	         	          $message=$istrue;
-	         	           echo "Duplicate values";	
-	                     }
-	     
+  if($istrue){
+   $message= 'Updated Successfully';
+   echo "Updated Successfully";
+   setLocation("admin/stationmasteredit.php");
+ }
+ else{
+   $message=$istrue;
+   echo "Duplicate values";	
+ }
+
 
 }
 
@@ -149,86 +149,81 @@ $message=array(
 
 
 
-<section>
-	<div class="row-sm-10"  align="center">
-		<div class="col-sm-6" align="left" >
+  <section>
+   <div class="row-sm-10"  align="center">
+    <div class="col-sm-6" align="left" >
 
 
 
 
-<form action="" method="post" >
+      <form action="" method="post" >
 
-  <table class="table table-hover w-50">
-    <tbody>
-      <tr>
-        <th scope="col">Stationmaster Id</th>
-        <td>
-          <input type="text" name="sid" id="sid" value="<?php echo  $details['stationmasterid']; ?>" disabled="disabled">
-          <input type="hidden" name="sid" value="<?php echo  $details['stationmasterid']; ?>">
-        </td>
-      </tr>
-      <tr>
-        <th scope="col">Name</th>
-        <td><div class="form-group">
-                
+        <table class="table table-hover w-50">
+          <tbody>
+            <tr>
+              <th scope="col">Stationmaster Id</th>
+              <td>
+                <input type="text" name="sid" id="sid" value="<?php echo  $details['stationmasterid']; ?>" disabled="disabled">
+                <input type="hidden" name="sid" value="<?php echo  $details['stationmasterid']; ?>">
+              </td>
+            </tr>
+            <tr>
+              <th scope="col">Name</th>
+              <td><div class="form-group">
+
                 <input type="text" name="sname" id="sname" class="form-control" value="<?php echo  $details['name']; ?>"  >
                 <!-- <input type="hidden" name="sname" value="<?php echo  $details['name']; ?>"> -->
-            </div>
-        </td>
-      </tr>
-      <tr>
-        <th scope="col">User Type</th>
-        <td><div class="form-group">
-                <input type="text" name="type" id="type" class="form-control" value="<?php echo  $details['type']; ?>" disabled="disabled" >
+
                 <input type="hidden" name="type" value="<?php echo  $details['type']; ?>">
+              </div>
+            </td>
+          </tr>
+
+          <tr>
+            <th scope="col">Joining Year</th>
+            <td><div class="form-group">
+              <input type="text" class="form-control datetimepicker" max-date="<?php echo Date('Y-m-d'); ?>" data-date-format="YYYY-M-D" name="joining" id="joining" placeholder=" Event On" data-parsley-required="true"  value="<?php echo  $details['joiningyear']; ?>">
+
             </div>
-        </td>
-      </tr>
-      <tr>
-        <th scope="col">Joining Year</th>
-        <td><div class="form-group">
-                <input type="date" name="joining" id="joining" class="form-control" value="<?php echo  $details['joiningyear']; ?>" >
-                <!-- <input type="hidden" name="joining" value="<?php echo  $details['joiningyear']; ?>"> -->
-            </div>
-        </td>
-      </tr>
-      <tr>
-        <th scope="col">Contact No</th>
-        <td><div class="form-group">
-                <input type="text" name="cno" id="cno" class="form-control" value="<?php echo  $details['contactno']; ?>" >
-                <!-- <input type="hidden" name="cno" value="<?php echo  $details['contactno']; ?>"> -->
-            </div>
+          </td>
+        </tr>
+        <tr>
+          <th scope="col">Contact No</th>
+          <td><div class="form-group">
+            <input type="text" name="cno" id="cno" class="form-control" value="<?php echo  $details['contactno']; ?>" >
+            <!-- <input type="hidden" name="cno" value="<?php echo  $details['contactno']; ?>"> -->
+          </div>
         </td>
       </tr>
       <tr>
         <th scope="col">Depot Name</th>
         <td><div class="form-group">
-                <input type="text" name="dname" id="dname" class="form-control" value="<?php echo  $details['depotname']; ?>"  >
-                <!-- <input type="hidden" name="dname" value="<?php echo  $details['depotname']; ?>"> -->
-            </div>
-        </td>
-      </tr>
-      <tr>
-        <th scope="col">Depot UserName</th>
-        <td><div class="form-group">
-                <input type="text" name="dusr" id="dusr" class="form-control" value="<?php echo  $details['depotusename']; ?>" disabled="disabled" >
-                <input type="hidden" name="dusr" value="<?php echo  $details['depotusename']; ?>">
-            </div>
-        </td>
-      </tr>
+          <input type="text" name="dname" id="dname" class="form-control" value="<?php echo  $details['depotname']; ?>"  >
+          <!-- <input type="hidden" name="dname" value="<?php echo  $details['depotname']; ?>"> -->
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <th scope="col">Depot UserName</th>
+      <td><div class="form-group">
+        <input type="text" name="dusr" id="dusr" class="form-control" value="<?php echo  $details['depotusename']; ?>" disabled="disabled" >
+        <input type="hidden" name="dusr" value="<?php echo  $details['depotusename']; ?>">
+      </div>
+    </td>
+  </tr>
 
-      <tr>
+  <tr>
 
-        <th scope="col">Depot Password</th>
-        <td><div class="form-group">
-                <input type="text" name="dpswd" id="dpswd" class="form-control" value="<?php echo  $details['depotpswd']; ?>" disabled="disabled" >
-                <input type="hidden" name="dpswd" value="<?php echo  $details['depotpswd']; ?>">
-            </div>
-        </td>
-      </tr>
-      </tbody>
+    <th scope="col">Depot Password</th>
+    <td><div class="form-group">
+      <input type="text" name="dpswd" id="dpswd" class="form-control" value="<?php echo  $details['depotpswd']; ?>" disabled="disabled" >
+      <input type="hidden" name="dpswd" value="<?php echo  $details['depotpswd']; ?>">
+    </div>
+  </td>
+</tr>
+</tbody>
 </table>
-<input type="submit" name="submit" value="Update" onclick="action">
+<input type="submit" name="submit" value="Update" class="btn btn-success " onclick="action">
 </form>
 
 

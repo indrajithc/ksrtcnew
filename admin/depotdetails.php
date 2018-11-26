@@ -19,37 +19,53 @@ if (isset($_POST['submit'])) {
 	// $tpdes = $_POST['tpdes'];
 	// $income = $_POST['income'];
 	$submit=$_POST['submit'];
- 
+
 
  $stmnt ='insert into depot (depotname,contactno,depousername,depopswd,conformpswd) values( :deponame,:contactno,:depousername,:depopswd,:conformpswd)';
-	     
-	     	     $params=array(
-                 
-       
-         ':deponame'        =>  $dname,
-         ':contactno'       =>  $cno,
-         ':depousername'    =>  $dusrname,
-         ':depopswd'        =>  $dpswd,
-         ':conformpswd'     =>  $cnfrm,
+
+ $params=array(
+
+
+   ':deponame'        =>  $dname,
+   ':contactno'       =>  $cno,
+   ':depousername'    =>  $dusrname,
+   ':depopswd'        =>  $dpswd,
+   ':conformpswd'     =>  $cnfrm,
          // ':noofbuses'       =>  $noofbus,
          // ':location'        =>  $location,
          // ':noofemployees'   =>  $emp,
          // ':longestroute'    =>  $lngstsrc.$lngstdes,
          // ':topcollection'   =>  $tpsrc.$tpdes,
          // ':income'          =>  $income,
-         
-	     	);
+
+ );
  
-	         $istrue=$db->execute_query($stmnt,$params);
-	                 if($istrue){
-	         	                  $message= 'added';
-	         	                  echo "hai";
-	                            }
-	                 else{
-	         	          $message=$istrue;
-	         	           echo "hlo";	
-	                     }
-	     
+
+ $interm = selectFromTable(' * ', ' depot', " depotname = '$dname' AND contactno = '$cno'    " , $db);
+ if ( $interm ) {
+  $message[0] = 3;
+  $message[1] = " already exists";
+
+
+
+} else {
+  
+
+
+ $istrue=$db->execute_query($stmnt,$params);
+ if($istrue){ 
+  $message[0] = 1;
+  $message[1] ="Successfully Added";
+}
+else{
+  $message[0] = 4;  
+  $message[1] ="Error";
+}
+}
+
+
+
+
 
 }
 
@@ -57,48 +73,57 @@ if (isset($_POST['submit'])) {
 
 
 <section>
-	<div class="row-sm-10"  align="center">
-		<div class="col-sm-6" align="left" >
+  <div class="row mb-2  bg-white p-2"  align="center">
+    <div class="offset-md-2 col-md-8" align="left" >
+      <h3 class="text-capitalize ">Add Depot Details</h3>
+    </div>
+  </div>
+</section>
+
+<?php echo show_error($message); ?>
+<section>
+	<div class="row bg-white px-2 py-4"  align="center">
+		<div class="offset-md-2 col-md-8" align="left" >
 			<form  action=""  method="post" data-parsley-validate   >
 				<div class="form-group">
 					<label for="depotname" >Depot Name</label>
 
-						<input type="text" name="depotname" class="form-control" id="depotname" placeholder="Enter Depot Name" required="Required">
-					
-					
-				</div>
-				<div class="form-group">
-    <label for="contactno">Contact No</label>
-    <input type="text" class="form-control" id="cno" name="cno"   placeholder="Enter Contact No" required="Required"> 
-  </div>
+          <input type="text" name="depotname" class="form-control" id="depotname" placeholder="Enter Depot Name" required="Required">
 
-  <div class="form-group">
-    <label for="durname">Depot UserName</label>
-    <input type="text" class="form-control" id="dusrname" name="dusrname"   placeholder="Enter Depot UserName" required="Required"> 
-  </div>
 
- 
+        </div>
+        <div class="form-group">
+          <label for="contactno">Contact No</label>
+          <input type="text" class="form-control" id="cno" name="cno"   placeholder="Enter Contact No" required="Required"> 
+        </div>
 
-  <div class="form-group">
-    <label for="dpswd">Depot Password</label>
-    <input type="password" class="form-control" id="dpswd" name="dpswd"   placeholder="Enter Depot Password" required="Required"> 
-  </div>
+        <div class="form-group">
+          <label for="durname">Depot UserName</label>
+          <input type="text" class="form-control" id="dusrname" name="dusrname"   placeholder="Enter Depot UserName" required="Required"> 
+        </div>
 
-  <div class="form-group">
-    <label for="cnfrm">Confirm Password</label>
-    <input type="password" class="form-control" id="cnfrm" name="cnfrm"   placeholder="Confirm Password" required="Required"> 
-  </div>
 
-  <!-- <div class="form-group"> -->
-    <!-- <label for="noofbus">No Of Buses</label> -->
-    <!-- <input type="text" class="form-control" id="noofbus" name="noofbus"   placeholder="Enter No of Buses" required="Required">  -->
-  <!-- </div> -->
-  <!-- <div class="form-group"> -->
-    <!-- <label for="location">Location</label> -->
-    <!-- <input type="text" class="form-control" id="location" name="location"   placeholder="Enter Location" required="Required">  -->
-  <!-- </div> -->
 
-  <!-- <div class="form-group"> -->
+        <div class="form-group">
+          <label for="dpswd">Depot Password</label>
+          <input type="password" class="form-control" id="dpswd" name="dpswd"   placeholder="Enter Depot Password" required="Required"> 
+        </div>
+
+        <div class="form-group">
+          <label for="cnfrm">Confirm Password</label>
+          <input type="password" class="form-control" id="cnfrm" name="cnfrm"   placeholder="Confirm Password" required="Required"> 
+        </div>
+
+        <!-- <div class="form-group"> -->
+          <!-- <label for="noofbus">No Of Buses</label> -->
+          <!-- <input type="text" class="form-control" id="noofbus" name="noofbus"   placeholder="Enter No of Buses" required="Required">  -->
+          <!-- </div> -->
+          <!-- <div class="form-group"> -->
+            <!-- <label for="location">Location</label> -->
+            <!-- <input type="text" class="form-control" id="location" name="location"   placeholder="Enter Location" required="Required">  -->
+            <!-- </div> -->
+
+            <!-- <div class="form-group"> -->
     <!-- <label for="emp">No of Employees</label>
     <input type="text" class="form-control" id="emp" name="emp"   placeholder="Enter No of Employees" required="Required"> 
   </div>
@@ -138,10 +163,10 @@ if (isset($_POST['submit'])) {
     <label for="income">Income</label>
     <input type="number" data-parsley-minlength="6" data-parsley-error-message="Income should be in digits"   class="form-control" id="income" name="income"   placeholder="Enter Income" required="Required"> 
   </div> -->
-  <input type="submit" name="submit" value="Submit" onclick="action">
-           </form >
+  <input type="submit" name="submit" class="btn btn-sm btn-success" value="Submit" onclick="action">
+</form >
 
-          
-   </div>
+
+</div>
 </section>
 <?php include_once('includes/footer.php') ?>

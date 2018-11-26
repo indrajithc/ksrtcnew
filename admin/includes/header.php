@@ -4,18 +4,23 @@
  * @Author: indran
  * @Date:   2018-10-17 16:48:54
  * @Last Modified by:   indran
- * @Last Modified time: 2018-11-08 06:45:42
+ * @Last Modified time: 2018-11-25 10:16:43
  */
 
+
 include_once('../global.php'); ?>
-<?php include_once('../root/functions.php'); ?>
-<?php include_once('../root/connection.php'); ?>
+<?php include_once('../root/connection.php');
+include_once('../root/functions.php');
+
+?>
 <?php  
 
-auth_login();
+auth_login();  
+
+$db=  new Database();
+$message=array(null,null);
+
 ?>
-
-
 <!DOCTYPE html>
 <html lang="en"  ng-app="app-admin">
 
@@ -43,8 +48,13 @@ auth_login();
 
 
 
-	<link rel="stylesheet" href="admin/css/style.css">  
-	<link rel="stylesheet" href="admin/css/style_01.css">
+	<link rel="stylesheet" href="admin/css/style_01.css"> 
+	<link rel="stylesheet" href="admin/css/style.css"> 
+	<link rel="stylesheet" href="assets/css/bootstrap-datetimepicker.min.css">
+	<link rel="stylesheet" href="assets/css/select2.min.css">
+	<link rel="stylesheet" href="assets/css/datatables.min.css">
+	<link rel="stylesheet" href="assets/css/cropper.min.css">
+
 
 
 
@@ -58,6 +68,20 @@ auth_login();
 
 
 <link rel="shortcut icon" href="assets/image/favicon/favicon.ico" /> 
+
+<style type="text/css">
+
+.select2-container .select2-selection--single { 
+	height: 40px !important; 
+}
+
+.asColorPicker-input, .dataTables_wrapper select, .jsgrid .jsgrid-table .jsgrid-filter-row input[type=text], .jsgrid .jsgrid-table .jsgrid-filter-row select, .jsgrid .jsgrid-table .jsgrid-filter-row input[type=number], .select2-container--default .select2-selection--single, .select2-container--default .select2-selection--single .select2-search__field, .tt-hint, .tt-query, .typeahead {
+	padding: .5rem 1rem 2rem !important; 
+}
+.select2-container--default .select2-selection--single .select2-selection__arrow {
+	height: 40px; 
+}
+</style>
 <script src="assets/js/jquery.min.js"></script> 
 
 </head>
@@ -87,19 +111,25 @@ auth_login();
 
 				</ul>
 				<ul class="navbar-nav navbar-nav-right">
-					<li class="nav-item dropdown">
+
+
+					<li class="nav-item  ml-4" >
+						
+					</li>
+
+
+					<li class="nav-item dropdown d-none">
 						<a class="nav-link count-indicator dropdown-toggle" id="messageDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
 							<i class="mdi mdi-file-outline"></i>
-							<span class="count">7</span>
+							<span class="count">0</span>
 						</a>
 						<div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list pb-0" aria-labelledby="messageDropdown">
-            <!--  
-            <a class="dropdown-item py-3">
-								<p class="mb-0 font-weight-medium float-left">You have 7 unread mails </p>
+							<a class="dropdown-item py-3">
+								<p class="mb-0 font-weight-medium float-left">You have 0 unread mails </p>
 								<span class="badge badge-pill badge-primary float-right">View all</span>
 							</a>
 							<div class="dropdown-divider"></div>
-							<a class="dropdown-item preview-item">
+							<!-- <a class="dropdown-item preview-item">
 								<div class="preview-thumbnail">
 									<img src="assets/image/default/user.png" alt="image" class="img-sm profile-pic"> </div>
 									<div class="preview-item-content flex-grow py-2">
@@ -122,89 +152,122 @@ auth_login();
 												<p class="preview-subject ellipsis font-weight-medium text-dark">Travis Jenkins </p>
 												<p class="font-weight-light small-text"> The meeting is cancelled </p>
 											</div>
-                    </a>
-                    
-                -->
-            </div>
-        </li>
-        <li class="nav-item dropdown ml-4">
-        	<a class="nav-link count-indicator dropdown-toggle" id="notificationDropdown" href="#" data-toggle="dropdown">
-        		<i class="mdi mdi-bell-outline"></i>
-        		<span class="count bg-success">4</span>
-        	</a>
-        	<div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list pb-0" aria-labelledby="notificationDropdown">
-                  <!--
-                  <a class="dropdown-item py-3 border-bottom">
-											<p class="mb-0 font-weight-medium float-left">You have 4 new notifications </p>
-											<span class="badge badge-pill badge-primary float-right">View all</span>
-										</a>
-										<a class="dropdown-item preview-item py-3">
-											<div class="preview-thumbnail">
-												<i class="mdi mdi-alert m-auto text-primary"></i>
-											</div>
-											<div class="preview-item-content">
-												<h6 class="preview-subject font-weight-normal text-dark mb-1">Application Error</h6>
-												<p class="font-weight-light small-text mb-0"> Just now </p>
-											</div>
-										</a>
-										<a class="dropdown-item preview-item py-3">
-											<div class="preview-thumbnail">
-												<i class="mdi mdi-settings m-auto text-primary"></i>
-											</div>
-											<div class="preview-item-content">
-												<h6 class="preview-subject font-weight-normal text-dark mb-1">Settings</h6>
-												<p class="font-weight-light small-text mb-0"> Private message </p>
-											</div>
-										</a>
-										<a class="dropdown-item preview-item py-3">
-											<div class="preview-thumbnail">
-												<i class="mdi mdi-airballoon m-auto text-primary"></i>
-											</div>
-											<div class="preview-item-content">
-												<h6 class="preview-subject font-weight-normal text-dark mb-1">New user registration</h6>
-												<p class="font-weight-light small-text mb-0"> 2 days ago </p>
-											</div>
-                    </a>
-                -->
-            </div>
-        </li>
+										</a> -->
+									</div>
+								</li>
+								<li class="nav-item dropdown ml-4" id="notificationNew">
+								</li>
 
-        <li class="nav-item dropdown d-none d-xl-inline-block">
-        	<a class="nav-link dropdown-toggle" id="UserDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
-        		<span class="profile-text">Hello, Admin !</span>
-        		<img class="img-xs rounded-circle" src="assets/image/default/user.png" alt="Profile image"> </a>
-        		<div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="UserDropdown">
-        			
-        			<a class="dropdown-item mt-2"> Manage Accounts </a>
-        			<a class="dropdown-item"> Change Password </a>
-        			<a class="dropdown-item"> Check Inbox </a>
-        			<a class="dropdown-item" href="exit"> Sign Out </a>
-        		</div>
-        	</li>
-        </ul>
-        <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas">
-        	<span class="ti-menu"></span>
-        </button>
-    </div>
-</nav>
+								<li class="nav-item dropdown d-none d-xl-inline-block">
+									<a class="nav-link dropdown-toggle" id="UserDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
+										
+										<img class="img-xs rounded-circle" src="assets/image/default/user.png" alt="Profile image"> </a>
+										<div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="UserDropdown">
+									<!-- 		<a class="dropdown-item p-0">
+												<div class="d-flex border-bottom">
+													<div class="py-3 px-4 d-flex align-items-center justify-content-center">
+														<i class="mdi mdi-bookmark-plus-outline mr-0 text-gray"></i>
+													</div>
+													<div class="py-3 px-4 d-flex align-items-center justify-content-center border-left border-right">
+														<i class="mdi mdi-account-outline mr-0 text-gray"></i>
+													</div>
+													<div class="py-3 px-4 d-flex align-items-center justify-content-center">
+														<i class="mdi mdi-alarm-check mr-0 text-gray"></i>
+													</div>
+												</div>
+											</a> -->
+											<!-- <a class="dropdown-item mt-2"> Manage Accounts </a> -->
+											<a class="dropdown-item" href="admin/change_password.php"> Change Password </a>
+											<!-- <a class="dropdown-item"> Check Inbox </a> -->
+											<a class="dropdown-item" href="exit"> Sign Out </a>
+										</div>
+									</li>
+								</ul>
+								<button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas">
+									<span class="ti-menu"></span>
+								</button>
+							</div>
+						</nav>
+						
+
+						<div class="container-fluid page-body-wrapper">
+							
 
 
-<div class="container-fluid page-body-wrapper">
-	
+							
+
+							
+
+							<nav class="sidebar sidebar-offcanvas" id="sidebar">
+								<ul class="nav">
 
 
-	
 
-	
+									<li class="nav-item nav-profile">
+										
 
-	<nav class="sidebar sidebar-offcanvas" id="sidebar">
-		<ul class="nav">
-			
-			<?php  include_once('navbar.php'); ?>
-		</ul>
-	</nav>
+								<!-- 		<div class="nav-link">
+											<div class="user-wrapper">
+												<div class="profile-image">
+													<img src="assets/image/default/user.png" alt="profile image"> </div>
+													<div class="text-wrapper">
+														<p class="profile-name">Richard V.Welsh</p>
+														<div>
+															<small class="designation text-muted">Manager</small>
+															<span class="status-indicator online"></span>
+														</div>
+													</div>
+												</div> 
+											</div> -->
 
-	<div class="main-panel">
+
+										</li>
 
 
-		<div class="content-wrapper">
+
+										
+										<?php  include_once('navbar.php'); ?>
+									</ul>
+								</nav>
+
+								<div class="main-panel">
+
+									<div class="content-wrapper">
+
+										<?php
+										if (isset($_SESSION['message'])) {
+											$message = $_SESSION['message'];
+											unset($_SESSION['message']);
+										}
+
+										?>
+
+										<script type="text/javascript">
+											
+
+											$(document) .ready(function($) {
+
+
+												// // location.href='admin/includes/notifications.php';
+												// $.ajax(  { 
+												// 	url: 'admin/includes/notifications.php',
+												// 	method: "POST",
+												// 	data: 'action='+"get-notif", 
+												// 	success: function (response) {
+												// 		console.log(response);
+
+												// 		$('#notificationNew').html( response);
+												// 	},
+												// 	error: function () {
+												// 		alert('notifications error');
+
+												// 	}
+												// });
+
+
+
+
+											});
+
+
+										</script>

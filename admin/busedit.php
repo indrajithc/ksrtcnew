@@ -2,47 +2,68 @@
 <?php
 $db=new Database();
 ?>
+<?php
+if (isset($_POST['submitd'])) 
+{
+
+ $id = $_POST['busid'];
+ $sql="DELETE FROM `bus` WHERE `bus`.`busid` = '$id'";
+
+
+ if(  $db->execute_query($sql) ){
+  $message[0] = 1;
+  $message[1] = 'Successfully Deleted'; 
+} else {
+  $message[0] = 4;
+  $message[1] = 'error'; 
+}
+}
+?>
 <section>
 	<div class="row-sm-10"  align="center">
-	<div class="col-sm-6" align="left" >
-	<form  action=""  method="post" data-parsley-validate  align="center" >
-		<div class="form-group">
-    <label for="depotname">Depot Name</label>
-     </div>
-     <div>
-    <select name="depotname" value="select" class="form-control" id="depotname" >
-    
+   <div class="col-sm-6" align="left" >
+     <form  action=""  method="post" data-parsley-validate  align="center" >
+      <div class="form-group">
+        <label for="depotname">Depot Name</label>
+      </div>
+      <div>
 
-                 <option value="Select" selected="selected" disabled="disabled">Select</option>
-              <?php
-    
-                $sql="SELECT * FROM `depot` WHERE 1";
+
+        <?php echo show_error($message); ?>
         
-                $result=$db->display($sql);
-                
-              foreach ($result as $key => $value) {
-              	 $name = $value['depotname'];
-				  $selectedMe = "";
-				if(isset($_POST['depotname']))
-				if($_POST['depotname'] == $name )
-					$selectedMe = "  selected ";
-                   echo "<option value='$name'   $selectedMe>$name</option>";
-									
-				}
-    ?>
-       
- </select>
-  </div>
-          
-  
-  
-  
- 
-<input type="submit" name="submit" value="Submit" onclick="action" align="center" a href="buseditview.php">
-	</form>	
-	</div>
-    </div>
-			
+        <select name="depotname" value="select" class="form-control" id="depotname" >
+
+
+         <option value="Select" selected="selected" disabled="disabled">Select</option>
+         <?php
+
+         $sql="SELECT * FROM `depot` WHERE 1";
+
+         $result=$db->display($sql);
+
+         foreach ($result as $key => $value) {
+          $name = $value['depotname'];
+          $selectedMe = "";
+          if(isset($_POST['depotname']))
+            if($_POST['depotname'] == $name )
+             $selectedMe = "  selected ";
+           echo "<option value='$name'   $selectedMe>$name</option>";
+
+         }
+         ?>
+
+       </select>
+     </div>
+
+
+
+
+
+     <input type="submit" name="submit" value="Submit" class="btn btn-info" align="center" a href="buseditview.php">
+   </form>	
+ </div>
+</div>
+
 </section>
 
 
@@ -84,7 +105,7 @@ $db=new Database();
                   <th scope="col">Depot</th>
                   <th scope="col">Producer</th>
                   <!-- <th scope="col">Age</th> -->
-               
+
                   <th scope="col" colspan="2">Action</th>
                 </tr>
               </thead>
@@ -104,7 +125,7 @@ $db=new Database();
 
 
                     <td>
-                      <form action="action" method="post">
+                      <form action="" method="post">
                         <input type="hidden" value="<?php echo $value['busid']; ?>" name="busid">
                         <?php
                           // if (isset($_POST['stationmasterid'])) 
@@ -114,32 +135,32 @@ $db=new Database();
 
                           // }
                         ?>
-                   <!--  <a href="admin/stationmasterfulviewvol.php?id=<?php echo $value['busid']; ?>" id= <?php echo $value['busid']; ?>"  class="btn btn-sm btn-info "><i class="fas fa-trash-alt"></i> -->
-                      <button name="submit" class="btn btn-sm btn-info "<i class="fas fa-trash-alt" ></i>go</button>
-                      </form>
-                    </td>
-                    <td><a href="admin/busedit_vol.php?id=<?php echo $value['busid']; ?>" id=<?php echo $value['busid']; ?>"   class="btn btn-sm btn-warning "  ><i class="far fa-edit"></i></a>     </td>
-                  </tr>
+                        <!--  <a href="admin/stationmasterfulviewvol.php?id=<?php echo $value['busid']; ?>" id= <?php echo $value['busid']; ?>"  class="btn btn-sm btn-info "><i class="fas fa-trash-alt"></i> -->
+                          <button name="submitd" class="btn btn-sm btn-info "<i class="fas fa-trash-alt" ></i>go</button>
+                        </form>
+                      </td>
+                      <td><a href="admin/busedit_vol.php?id=<?php echo $value['busid']; ?>" id=<?php echo $value['busid']; ?>"   class="btn btn-sm btn-warning "  ><i class="far fa-edit"></i></a>     </td>
+                    </tr>
 
 
 
-                <?php endforeach; ?>
-              </tbody>
-            </table>
+                  <?php endforeach; ?>
+                </tbody>
+              </table>
 
-          </div>
-          <?php else : ?>
-            <div class="alert text-center alert-warning">
-              <p>no data found</p>
             </div>
+            <?php else : ?>
+              <div class="alert text-center alert-warning">
+                <p>no data found</p>
+              </div>
+
+            <?php endif; ?>
 
           <?php endif; ?>
 
-        <?php endif; ?>
 
 
-
-      </div> 
-    </div>
-  </form>
-  <?php include_once('includes/footer.php') ?>
+        </div> 
+      </div>
+    </form>
+    <?php include_once('includes/footer.php') ?>
